@@ -17,7 +17,11 @@ function Site_path($path = '')
 // Declaring program title
 function Program_title($title = "")
 {
-    return PROGRAM_TITLE . " - $title";
+    if (strlen($title) > 0) {
+        return PROGRAM_TITLE . " - $title";
+    } else {
+        return PROGRAM_TITLE;
+    }
 }
 
 // Declaring redirection
