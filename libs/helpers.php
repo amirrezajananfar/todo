@@ -51,3 +51,11 @@ function Is_Ajax_request()
     }
     return false;
 }
+
+// A temporary function to get pretty var_dump
+function My_dump($variable)
+{
+    echo "<pre>";
+    var_dump($variable);
+    echo "</pre>";
+}

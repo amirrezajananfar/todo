@@ -33,15 +33,16 @@
                     <div class="mb-3">
                         <h6 class="text-center">لیست پوشه ها</h6>
                     </div>
-                    <div class="w-100 rounded my-1 p-2 bg-secondary text-light">
-                        <i class="bi bi-folder-fill d-inline ms-1"></i>
-                        <p class="d-inline">کارهای شخصی</p>
-                        <a class="bg-danger rounded text-decoration-none text-light px-2 float-start" href="">x</a>
-                    </div>
-                    <div class="w-100 rounded my-1 p-2 bg-secondary text-light">
-                        <i class="bi bi-folder-fill d-inline ms-1"></i>
-                        <p class="d-inline">کار و برنامه نویسی</p>
-                        <a class="bg-danger rounded text-decoration-none text-light px-2 float-start" href="">x</a>
+                    <div id="folders">
+                        <?php foreach ($folders as $folder) : ?>
+                            <div class="w-100 rounded my-1 p-2 bg-secondary text-light">
+                                <i class="bi bi-folder-fill d-inline ms-1"></i>
+                                <a class="text-decoration-none" href="<?php echo '?folder_id=' . $folder->id; ?>">
+                                    <p class="d-inline text-light"><?php echo $folder->name; ?></p>
+                                </a>
+                                <a class="bg-danger rounded text-decoration-none text-light px-2 float-start delete-btn" href="<?php echo '?delete_folder=' . $folder->id; ?>">x</a>
+                            </div>
+                        <?php endforeach; ?>
                     </div>
                 </div>
             </div>
@@ -50,12 +51,10 @@
                     <div class="modal-dialog">
                         <div class="modal-content">
                             <div class="modal-body">
-                                <form action="">
-                                    <div class="mb-3 mt-3">
-                                        <input type="text" class="form-control" id="folderName" placeholder="نام پوشه مدنظر خود را بنویسید..." name="folderName">
-                                    </div>
-                                    <button type="submit" class="btn btn-sm btn-success w-100">ایجاد پوشه جدید</button>
-                                </form>
+                                <div class="mb-3 mt-3">
+                                    <input type="text" class="form-control" id="newFolder" placeholder="نام پوشه مدنظر خود را بنویسید..." name="folderName">
+                                </div>
+                                <button type="submit" id="newFolderButton" class="btn btn-sm btn-success w-100">ایجاد پوشه جدید</button>
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-sm btn-danger" data-bs-dismiss="modal">بستن</button>
@@ -67,12 +66,10 @@
                     <div class="modal-dialog">
                         <div class="modal-content">
                             <div class="modal-body">
-                                <form action="">
-                                    <div class="mb-3 mt-3">
-                                        <input type="text" class="form-control" id="taskName" placeholder="اطلاعات تسک مدنظر خود را بنویسید..." name="taskName">
-                                    </div>
-                                    <button type="submit" class="btn btn-sm btn-success w-100">ایجاد تسک جدید</button>
-                                </form>
+                                <div class="mb-3 mt-3">
+                                    <input type="text" class="form-control" id="newTask" placeholder="اطلاعات تسک مدنظر خود را بنویسید..." name="taskName">
+                                </div>
+                                <button type="submit" class="btn btn-sm btn-success w-100">ایجاد تسک جدید</button>
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-sm btn-danger" data-bs-dismiss="modal">بستن</button>
@@ -87,7 +84,7 @@
                     <div class="w-100 rounded my-2 p-2 bg-secondary text-light">
                         <i class="bi bi-square ms-1"></i>
                         <p class="d-inline">اصلاح کردن موی سر به همراه ریش و سیبیل</p>
-                        <a class="bg-danger rounded text-decoration-none text-light px-2 float-start" href="">x</a>
+                        <a class="bg-danger rounded text-decoration-none text-light px-2 float-start delete-btn" href="">x</a>
                     </div>
                     <div class="w-100 rounded my-2 p-2 bg-secondary text-light">
                         <i class="bi bi-check-square ms-1"></i>
@@ -106,6 +103,37 @@
         </div>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script>
+        // Sending inserted inforamtion from user into database with ajax
+        $(document).ready(function() {
+            $('#newFolderButton').click(function(e) {
+                let folder_name = $('#newFolder');
+                $.ajax({
+                    url: "<?php echo Site_url('process/add-folder.php') ?>",
+                    method: "post",
+                    data: {
+                        action: "add_folder",
+                        folder_name: folder_name.val()
+                    },
+                    success: function(response) {
+                        if (response != false) {
+                            let json_response = JSON.parse(response);
+                            let added_folder_id = json_response[0].id;
+                            let added_folder_name = json_response[0].name;
+                            let added_folder = '<div class="w-100 rounded my-1 p-2 bg-secondary text-light"><i class="bi bi-folder-fill d-inline ms-1"></i><a class="text-decoration-none" href="?folder_id=' + added_folder_id + '"><p class="d-inline text-light">' + added_folder_name + '</p></a><a class="bg-danger rounded text-decoration-none text-light px-2 float-start delete-btn" href="?delete_folder=' + added_folder_id + '">x</a></div>'
+                            $('#folders').append(added_folder);
+                            folder_name.val('');
+                        } else if (response != true) {
+                            alert(response);
+                        } else {
+                            alert('خطایی در انجام عملیات رخ داده است!');
+                        }
+                    }
+                });
+            });
+        });
+    </script>
 </body>
 
 </html>

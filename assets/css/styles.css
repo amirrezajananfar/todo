@@ -32,3 +32,8 @@ html, body {
     background: #6c757d !important;
     color: #fff !important;
 }
+
+/* Making hover for delete  buttons */
+.delete-btn:hover {
+    background-color: #aa1925 !important;
+}
