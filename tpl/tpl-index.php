@@ -34,13 +34,19 @@
                         <h6 class="text-center">لیست پوشه ها</h6>
                     </div>
                     <div id="folders">
+                        <div class="w-100 rounded my-1 p-2 bg-secondary text-light">
+                            <i class="bi bi-folder-fill d-inline ms-1"></i>
+                            <a class="text-decoration-none" href="<?php echo Site_url(); ?>">
+                                <p class="d-inline text-light">نمایش تمامی تسک ها</p>
+                            </a>
+                        </div>
                         <?php foreach ($folders as $folder) : ?>
                             <div class="w-100 rounded my-1 p-2 bg-secondary text-light">
                                 <i class="bi bi-folder-fill d-inline ms-1"></i>
                                 <a class="text-decoration-none" href="<?php echo '?folder_id=' . $folder->id; ?>">
                                     <p class="d-inline text-light"><?php echo $folder->name; ?></p>
                                 </a>
-                                <a class="bg-danger rounded text-decoration-none text-light px-2 float-start delete-btn" href="<?php echo '?delete_folder=' . $folder->id; ?>">x</a>
+                                <a class="bg-danger rounded text-decoration-none text-light px-2 float-start delete-btn" href="<?php echo '?delete_folder=' . $folder->id; ?>" onclick="return confirm('آیا از حذف این پوشه اطمینان دارید؟')">x</a>
                             </div>
                         <?php endforeach; ?>
                     </div>
@@ -52,7 +58,7 @@
                         <div class="modal-content">
                             <div class="modal-body">
                                 <div class="mb-3 mt-3">
-                                    <input type="text" class="form-control" id="newFolder" placeholder="نام پوشه مدنظر خود را بنویسید..." name="folderName">
+                                    <input type="text" class="form-control" id="newFolder" placeholder="نام پوشه مدنظر خود را بنویسید..." name="folderName" autocomplete="off">
                                 </div>
                                 <button type="submit" id="newFolderButton" class="btn btn-sm btn-success w-100">ایجاد پوشه جدید</button>
                             </div>
@@ -67,9 +73,9 @@
                         <div class="modal-content">
                             <div class="modal-body">
                                 <div class="mb-3 mt-3">
-                                    <input type="text" class="form-control" id="newTask" placeholder="اطلاعات تسک مدنظر خود را بنویسید..." name="taskName">
+                                    <input type="text" class="form-control" id="newTask" placeholder="اطلاعات تسک مدنظر خود را بنویسید..." name="taskName" autocomplete="off">
                                 </div>
-                                <button type="submit" class="btn btn-sm btn-success w-100">ایجاد تسک جدید</button>
+                                <button type="submit" id="newTaskButton" class="btn btn-sm btn-success w-100">ایجاد تسک جدید</button>
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-sm btn-danger" data-bs-dismiss="modal">بستن</button>
@@ -81,15 +87,20 @@
                     <div class="mb-3">
                         <h6 class="text-center">لیست تسک ها</h6>
                     </div>
-                    <div class="w-100 rounded my-2 p-2 bg-secondary text-light">
-                        <i class="bi bi-square ms-1"></i>
-                        <p class="d-inline">اصلاح کردن موی سر به همراه ریش و سیبیل</p>
-                        <a class="bg-danger rounded text-decoration-none text-light px-2 float-start delete-btn" href="">x</a>
-                    </div>
-                    <div class="w-100 rounded my-2 p-2 bg-secondary text-light">
-                        <i class="bi bi-check-square ms-1"></i>
-                        <p class="d-inline">رفتن به باشگاه و انجام ورزش های مربوط به جلو بازو</p>
-                        <a class="bg-danger rounded text-decoration-none text-light px-2 float-start" href="">x</a>
+                    <div id="tasks">
+                        <?php if (sizeof($tasks)) : ?>
+                            <?php foreach ($tasks as $task) : ?>
+                                <div class="w-100 rounded my-2 p-2 bg-secondary text-light">
+                                    <i data-task-id="<?php echo $task->id ?>" class="bi <?php echo $task->is_done ? 'bi-check-square-fill' : 'bi-square' ?> ms-1 task-situation"></i>
+                                    <p class="d-inline"><?php echo $task->title ?></p>
+                                    <a class="bg-danger rounded text-decoration-none text-light px-2 float-start delete-btn" href="<?php echo '?delete_task=' . $task->id; ?>" onclick="return confirm('آیا از حذف این تسک اطمینان دارید؟')">x</a>
+                                </div>
+                            <?php endforeach; ?>
+                        <?php else : ?>
+                            <div id="noTask" class="w-100 rounded my-2 p-2 bg-secondary text-light">
+                                <p class="d-inline">هیچ تسکی در این پوشه تعریف نشده است...</p>
+                            </div>
+                        <?php endif; ?>
                     </div>
                     <div class="todo-pagination" style="direction: ltr !important;">
                         <nav>
@@ -107,6 +118,7 @@
     <script>
         // Sending inserted inforamtion from user into database with ajax
         $(document).ready(function() {
+            // Inserting a new folder
             $('#newFolderButton').click(function(e) {
                 let folder_name = $('#newFolder');
                 $.ajax({
@@ -117,18 +129,63 @@
                         folder_name: folder_name.val()
                     },
                     success: function(response) {
-                        if (response != false) {
-                            let json_response = JSON.parse(response);
-                            let added_folder_id = json_response[0].id;
-                            let added_folder_name = json_response[0].name;
-                            let added_folder = '<div class="w-100 rounded my-1 p-2 bg-secondary text-light"><i class="bi bi-folder-fill d-inline ms-1"></i><a class="text-decoration-none" href="?folder_id=' + added_folder_id + '"><p class="d-inline text-light">' + added_folder_name + '</p></a><a class="bg-danger rounded text-decoration-none text-light px-2 float-start delete-btn" href="?delete_folder=' + added_folder_id + '">x</a></div>'
+                        let json_response = JSON.parse(response);
+                        let added_folder_id = json_response[0].id;
+                        let added_folder_name = json_response[0].name;
+                        if (added_folder_id != null) {
+                            let added_folder = '<div class="w-100 rounded my-1 p-2 bg-secondary text-light"><i class="bi bi-folder-fill d-inline ms-1"></i><a class="text-decoration-none" href="?folder_id=' + added_folder_id + '"><p class="d-inline text-light">' + added_folder_name + '</p></a><a class="bg-danger rounded text-decoration-none text-light px-2 float-start delete-btn" href="?delete_folder=' + added_folder_id + '"onclick="return confirm(' + "'" + 'آیا از حذف این تسک اطمینان دارید؟' + "'" + ')">x</a></div>'
                             $('#folders').append(added_folder);
                             folder_name.val('');
-                        } else if (response != true) {
-                            alert(response);
                         } else {
-                            alert('خطایی در انجام عملیات رخ داده است!');
+                            alert(json_response);
                         }
+                    }
+                });
+            });
+        });
+        // Inserting a new task
+        $(document).ready(function() {
+            $('#newTaskButton').click(function(e) {
+                let task_title = $('#newTask');
+                let no_task = $('#noTask');
+                $.ajax({
+                    url: "<?php echo Site_url('process/add-task.php') ?>",
+                    method: "post",
+                    data: {
+                        action: "add_task",
+                        folder_id: "<?php echo !empty($_GET['folder_id']) ? $_GET['folder_id'] : '' ?>",
+                        task_title: task_title.val()
+                    },
+                    success: function(response) {
+                        let json_response = JSON.parse(response);
+                        let added_task_id = json_response[0].id;
+                        let added_task_title = json_response[0].title;
+                        let added_task_situation = json_response[0].is_done;
+                        if (added_task_id != null) {
+                            let added_task = '<div class="w-100 rounded my-2 p-2 bg-secondary text-light"><i class="bi bi-square ms-1"></i><p class="d-inline"> ' + added_task_title + ' </p><a class="bg-danger rounded text-decoration-none text-light px-2 float-start delete-btn" href="?delete_task=' + added_task_id + '" onclick="return confirm(' + "'" + 'آیا از حذف این تسک اطمینان دارید؟' + "'" + ')">x</a></div>';
+                            $('#tasks').append(added_task);
+                            task_title.val('');
+                            no_task.hide();
+                        } else {
+                            alert(json_response);
+                        }
+                    }
+                });
+            });
+        });
+        // Updating task situation
+        $(document).ready(function() {
+            $('.task-situation').click(function(e) {
+                let task_id = $(this).attr('data-task-id');
+                $.ajax({
+                    url: "<?php echo Site_url('process/task-situation.php') ?>",
+                    method: "post",
+                    data: {
+                        action: "switch_situation",
+                        task_id: task_id
+                    },
+                    success: function(response) {
+                        location.reload();
                     }
                 });
             });

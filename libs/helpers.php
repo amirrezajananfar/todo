@@ -52,10 +52,17 @@ function Is_Ajax_request()
     return false;
 }
 
-// A temporary function to get pretty var_dump
-function My_dump($variable)
+// Declaring die & dump function
+function dd($variable)
 {
-    echo "<pre>";
+    echo '<pre style="position: relative;z-index: 999;margin: 10px;padding: 10px;color: #750822;background-color: #fff;border-left: 3px solid #750822;border-radius: 5px;">';
     var_dump($variable);
-    echo "</pre>";
+    echo '</pre>';
+}
+
+// Declaring making json messages function
+function Json_message($msg)
+{
+    $json_msg = json_encode($msg);
+    return $json_msg;
 }

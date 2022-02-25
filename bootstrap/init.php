@@ -27,11 +27,11 @@ require BASE_PATH . "libs/helpers.php";
 // Including vendor file
 require BASE_PATH . "vendor/autoload.php";
 
-// Including tasks library file
-require BASE_PATH . "libs/lib-tasks.php";
+// Including auth library file
+require BASE_PATH . "libs/lib-auth.php";
 
 // Including folders library file
 require BASE_PATH . "libs/lib-folders.php";
 
-// Including auth library file
-require BASE_PATH . "libs/lib-auth.php";
+// Including tasks library file
+require BASE_PATH . "libs/lib-tasks.php";

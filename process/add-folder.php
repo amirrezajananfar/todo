@@ -1,29 +1,29 @@
 <?php
 
 // Including init file
-
-use JetBrains\PhpStorm\Internal\ReturnTypeContract;
-
 require_once '../bootstrap/init.php';
 
 // Cheking if request is ajax
 if (!Is_Ajax_request()) {
-    Die_page("درخواست به صورت ایجکس نمی باشد");
+    Die_page('درخواست به صورت ایجکس نمی باشد');
 }
 
 // Cheking if action set or not
 if (!isset($_POST['action']) || empty($_POST['action'])) {
-    die('عملیاتی تنظیم نشده است');
+    echo Json_message('عملیاتی تنظیم نشده است');
+    die();
 }
 
 // Cheking if user insert name of the folder
 if (!isset($_POST['folder_name']) || strlen($_POST['folder_name']) < 1) {
-    return 'نام پوشه مدنظر خود را بنویسید' && false;
+    echo Json_message('نام پوشه مدنظر خود را بنویسید');
+    die();
 }
 
 // Cheking is action valid and add folder into database
 if ($_POST['action'] != 'add_folder') {
-    die('عملیات معتبر نمی باشد');
+    echo Json_message('عملیات معتبر نمی باشد');
+    die();
 } else {
     $add_folder = Add_folder($_POST['folder_name']);
     function Last_Inserted_folder()
