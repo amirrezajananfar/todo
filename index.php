@@ -3,6 +3,11 @@
 // Including init file
 require "bootstrap/init.php";
 
+// Cheking if user logged in
+if (!Is_User_Logged_in()) {
+    redirect(Site_url('auth.php'));
+}
+
 // Checking if user wants to delete a folder and calling it's function
 if (isset($_GET['delete_folder']) && is_numeric($_GET['delete_folder'])) {
     $delete_folder = Delete_folder($_GET['delete_folder']);
