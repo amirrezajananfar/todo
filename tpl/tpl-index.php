@@ -17,10 +17,12 @@
             <div class="col-sm-3">
                 <div class="bg-light shadow rounded my-2 p-3">
                     <div class="mb-3">
-                        <h6 class="text-center">نام کاربر: امیررضا جانانفر</h6>
+                        <h6 class="text-center">نام کاربر: <?php echo $logged_in_user->name ?? 'خطا در دریافت نام' ?></h6>
                     </div>
                     <div class="text-center">
-                        <button class="btn btn-sm w-100 btn-danger">خروج از حساب</button>
+                        <a href="<?php echo Site_url('?logout=1') ?>">
+                            <button class="btn btn-sm w-100 btn-danger">خروج از حساب</button>
+                        </a>
                     </div>
                 </div>
                 <div class="bg-light shadow rounded my-2 p-3">

@@ -26,6 +26,7 @@ if ($_POST['action'] != 'add_folder') {
     die();
 } else {
     $add_folder = Add_folder($_POST['folder_name']);
+    // Getting last inserted folder to show
     function Last_Inserted_folder()
     {
         global $pdo, $add_folder;
@@ -37,5 +38,6 @@ if ($_POST['action'] != 'add_folder') {
         return $records;
     };
     $last_inserted_folder = Last_Inserted_folder();
+    // Sending data as json for ajax
     echo json_encode($last_inserted_folder);
 }

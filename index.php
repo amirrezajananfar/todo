@@ -3,10 +3,20 @@
 // Including init file
 require "bootstrap/init.php";
 
+// Logging out the user
+if (isset($_GET['logout'])) {
+    // Calling logout function
+    User_logout();
+}
+
 // Cheking if user logged in
 if (!Is_User_Logged_in()) {
+    // If user was not logged in recdirect to login & register page
     redirect(Site_url('auth.php'));
 }
+
+// Getting logged in user
+$logged_in_user = Get_Logged_In_user();
 
 // Checking if user wants to delete a folder and calling it's function
 if (isset($_GET['delete_folder']) && is_numeric($_GET['delete_folder'])) {

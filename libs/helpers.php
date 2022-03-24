@@ -66,3 +66,45 @@ function Json_message($msg)
     $json_msg = json_encode($msg);
     return $json_msg;
 }
+
+// Declaring a function to check if input language persian or arabic
+function Is_arabic($userinput)
+{
+    return preg_match('/^\p{Arabic}*$/u', $userinput);
+}
+
+// Declaring a function to check user password strength
+function Is_Password_strength($userpassword)
+{
+    if (strlen($userpassword) <= '8') {
+        $userpassword_error = "رمز عبور باید حداقل حاوی 8 کاراکتر باشد!";
+        return $userpassword_error;
+        die();
+    } else if (!preg_match("#[0-9]+#", $userpassword)) {
+        $userpassword_error = "رمز عبور باید حداقل حاوی یک کاراکتر عددی باشد!";
+        return $userpassword_error;
+        die();
+    } else if (!preg_match("#[A-Z]+#", $userpassword)) {
+        $userpassword_error = "رمز عبور باید حاوی حروف بزرگ باشد!";
+        return $userpassword_error;
+        die();
+    } else if (!preg_match("#[a-z]+#", $userpassword)) {
+        $userpassword_error = "رمز عبور باید حاوی حروف کوچک باشد!";
+        return $userpassword_error;
+        die();
+    } else if (Is_arabic($userpassword)) {
+        $userpassword_error = "از زبان انگلیسی برای رمز عبور خود استفاده کنید!";
+        return $userpassword_error;
+        die();
+    }
+}
+
+// Declaring a function to check is user email valid
+function Is_Email_valid($useremail)
+{
+    if (!filter_var($useremail, FILTER_VALIDATE_EMAIL)) {
+        $useremail_error = "آدرس ایمیل معتبر نمی باشد";
+        return $useremail_error;
+        die();
+    }
+}

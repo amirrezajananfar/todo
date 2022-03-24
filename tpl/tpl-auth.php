@@ -25,14 +25,14 @@
                         </p>
                     </div>
                     <div class="m-4 p-4 shadow-sm rounded">
-                        <form action="">
+                        <form action="<?php echo Site_url('auth.php?action=login') ?>" method="post">
                             <div class="py-3">
                                 <label for="useremail" class="form-label">آدرس ایمیل:</label>
-                                <input type="email" class="form-control" id="useremail" placeholder="آدرس ایمیل خود را بنویسید" name="useremail">
+                                <input type="email" class="form-control" id="useremail" placeholder="آدرس ایمیل خود را بنویسید" name="useremail" required>
                             </div>
                             <div class="py-3">
                                 <label for="userpassword" class="form-label">رمز عبور:</label>
-                                <input type="password" class="form-control" id="userpassword" placeholder="رمز عبور خود را بنویسید" name="userpassword">
+                                <input type="password" class="form-control" id="userpassword" placeholder="رمز عبور خود را بنویسید" name="userpassword" autocomplete="off" required>
                             </div>
                             <div class="py-3 text-start">
                                 <button type="submit" class="btn btn-success w-100">ورود به حساب</button>
@@ -52,18 +52,18 @@
                         </p>
                     </div>
                     <div class="m-4 p-4 shadow-sm rounded">
-                        <form action="">
+                        <form action="<?php echo Site_url('auth.php?action=register') ?>" method="post">
                             <div class="py-3">
                                 <label for="username" class="form-label">نام:</label>
-                                <input type="text" class="form-control" id="username" placeholder="نام خود را کامل بنویسید" name="username">
+                                <input type="text" class="form-control" id="username" placeholder="نام خود را کامل بنویسید" name="username" autocomplete="off" required>
                             </div>
                             <div class="py-3">
                                 <label for="useremail" class="form-label">آدرس ایمیل:</label>
-                                <input type="email" class="form-control" id="useremail" placeholder="آدرس ایمیل خود را بنویسید" name="useremail">
+                                <input type="email" class="form-control" id="useremail" placeholder="آدرس ایمیل خود را بنویسید" name="useremail" autocomplete="off" required>
                             </div>
                             <div class="py-3">
                                 <label for="userpassword" class="form-label">رمز عبور:</label>
-                                <input type="password" class="form-control" id="userpassword" placeholder="رمز عبور خود را بنویسید" name="userpassword">
+                                <input type="password" class="form-control" id="userpassword" placeholder="رمز عبور خود را بنویسید" name="userpassword" autocomplete="off" required>
                             </div>
                             <div class="py-3 text-start">
                                 <button type="submit" class="btn btn-primary w-100">ایجاد حساب</button>

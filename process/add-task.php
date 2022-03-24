@@ -36,6 +36,7 @@ if ($_POST['action'] != 'add_task') {
     die();
 } else {
     $add_task = Add_task($task_title, $folder_id);
+    // Getting last inserted task to show
     function Last_Inserted_task()
     {
         global $pdo, $add_task, $folder_id;
@@ -47,5 +48,6 @@ if ($_POST['action'] != 'add_task') {
         return $records;
     };
     $last_inserted_task = Last_Inserted_task();
+    // Sending data as json for ajax
     echo json_encode($last_inserted_task);
 }
