@@ -1,7 +1,7 @@
 # Simple To Do
 A personal daily task manager which is programmed in procedural programming
 
-### Used technology are:
+##### Used technology are:
 1. PHP
 2. MySQL
 3. Ajax
