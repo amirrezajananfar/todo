@@ -1,5 +1,5 @@
 # Simple To Do
---------------
+___
 A personal daily task manager which is programmed in procedural programming
 
 ### Used technology are:
