@@ -7,6 +7,7 @@ function Get_tasks()
     $current_user_id = Get_Current_User_id();
     $current_folder_id = $_GET['folder_id'] ?? null;
     $folder_id = '';
+    // Checking if folder id set
     if (isset($current_folder_id) && is_numeric($current_folder_id)) {
         $folder_id = "AND folder_id = $current_folder_id";
     }

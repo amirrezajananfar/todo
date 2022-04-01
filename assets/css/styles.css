@@ -1,5 +1,4 @@
 /* Declaring where the Persian font is */
-
 @font-face {
     font-family: IRANSansWeb_FaNum;
     font-style: normal;
@@ -14,23 +13,10 @@
         url('../font/ttf/IRANSansWeb_FaNum.ttf') format('truetype');
 }
 
-/* Using the Persian font entire of project */
-
+/* Using the Persian font entire of the project */
 html, body {
     direction: rtl !important;
     font-family: 'IRANSansWeb_FaNum' !important;
-}
-
-/* Making some changes in bootstrap pagination */
-.todo-pagination .pagination>li>a,
-.todo-pagination .pagination>li>span {
-    border: 1px solid #6c757d !important;
-    color: #6c757d !important;
-}
-
-.pagination>li.active>a {
-    background: #6c757d !important;
-    color: #fff !important;
 }
 
 /* Making hover for delete buttons */

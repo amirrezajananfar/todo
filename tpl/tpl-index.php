@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="fa">
-
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -10,7 +9,6 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css" rel="stylesheet">
 </head>
-
 <body class="bg-secondary">
     <div class="container-fluid">
         <div class="row my-3">
@@ -104,13 +102,6 @@
                             </div>
                         <?php endif; ?>
                     </div>
-                    <div class="todo-pagination" style="direction: ltr !important;">
-                        <nav>
-                            <ul class="pagination justify-content-center text-light">
-                                <li class="page-item active"><a class="page-link" href="#">1</a></li>
-                            </ul>
-                        </nav>
-                    </div>
                 </div>
             </div>
         </div>
@@ -194,5 +185,4 @@
         });
     </script>
 </body>
-
 </html>

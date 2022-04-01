@@ -1,13 +1,8 @@
 {
-    "name": "amirreza/todo",
+    "name": "rezajananfar/todo",
     "description": "A personal daily task manager (Using PHP, MySQL, Ajax and Bootstrap)",
     "type": "project",
     "license": "MIT",
-    "autoload": {
-        "psr-4": {
-            "Amirreza\\Todo\\": "src/"
-        }
-    },
     "authors": [
         {
             "name": "Amirreza Jananfar",

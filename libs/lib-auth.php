@@ -21,6 +21,7 @@ function User_register($username, $useremail, $userpassword)
         // Checking if userpassword good & safe
         echo Is_Password_strength($userpassword);
     }
+    // Hashing password here
     $hashed_password = password_hash($userpassword, PASSWORD_BCRYPT);
     $sql = "INSERT INTO users (name, email, password) VALUES (:username, :useremail, :userpassword)";
     $stmt = $pdo->prepare($sql);

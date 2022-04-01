@@ -24,9 +24,6 @@ try {
 // Including helper file
 require BASE_PATH . "libs/helpers.php";
 
-// Including vendor file
-require BASE_PATH . "vendor/autoload.php";
-
 // Including auth library file
 require BASE_PATH . "libs/lib-auth.php";
 
